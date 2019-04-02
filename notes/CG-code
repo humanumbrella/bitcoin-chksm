@@ -1,0 +1,22 @@
+var text = unescape(encodeURIComponent(area.value));
+var chunks = CG_WRITE_FILE_CHUNKS.concat(file_hash, Bitcoin.genAddressesFromText(text), category);
+CG_WRITE_CHUNKS = chunks;
+
+var sz = chunks.length;
+text = "";
+for (var i = 0; i < sz; i++) {
+    //text+=ascii2hex(Bitcoin.getAddressPayload(chunks[i]))+"\n";
+    //text+=format_btc_addr(chunks[i])+"\n";
+    text+=chunks[i]+"\n";
+}
+
+while (addr.hasChildNodes()) addr.removeChild(addr.lastChild);
+addr.appendChild(document.createTextNode(text));
+
+var inputs  = 1;
+var outputs = sz;
+var tx_size = inputs*181 + outputs*34 + 10;
+var tx_fee  = (tx_size*CG_SAT_BYTE)/100000000.0;
+var tx_cost = CG_WRITE_MIN_BTC_OUTPUT*outputs + tx_fee;
+tx_cost += CG_WRITE_MIN_BTC_OUTPUT; // Minimum donation added by default.
+tx_cost *= 1.1; // Encoder service fee is 10% of the TX cost.
