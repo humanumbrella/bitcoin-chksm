@@ -23,7 +23,7 @@ var tx_cost = CG_WRITE_MIN_BTC_OUTPUT*outputs + tx_fee;
 tx_cost += CG_WRITE_MIN_BTC_OUTPUT; // Minimum donation added by default.
 tx_cost *= 1.1; // Encoder service fee is 10% of the TX cost.
 ```
-from (cryptograffiti github)[https://github.com/1Hyena/cryptograffiti/blob/master/src/write.js#L337]
+from [cryptograffiti github](https://github.com/1Hyena/cryptograffiti/blob/master/src/write.js#L337)
 
 So if I input "Test" to my program, then the output of my program right now is
 0xee00279f6b080e8ed015
@@ -61,4 +61,4 @@ o.genAddressesFromText = function (text_in, endWithNewline) {
   return addressesAsTextInArray;
 };
 ```
-from (cryptograffiti github library)[https://github.com/1Hyena/cryptograffiti/blob/master/src/lib/bitcoin.js#L67]
+from [cryptograffiti github library](https://github.com/1Hyena/cryptograffiti/blob/master/src/lib/bitcoin.js#L67)
