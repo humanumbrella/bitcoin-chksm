@@ -1,0 +1,12 @@
+bitcoin uses a double sha256 to compute the checksum - let's do something similar, but include a few more bytes.
+
+
+from cryptograffiti
+
+  CG_WRITE_FILE_CHUNKS = Bitcoin.genAddressesFromText(txt, false);
+
+    /*var ripemd160 = CryptoJS.algo.RIPEMD160.create();
+    ripemd160.update(txt);
+    var hash = ripemd160.finalize();*/
+    var hash = CryptoJS.RIPEMD160(arrayBufferToWordArray(CG_WRITE_FILE_BYTES)).toString();
+    CG_WRITE_FILE_HASH = Bitcoin.createAddressFromText(hex2ascii(hash));
