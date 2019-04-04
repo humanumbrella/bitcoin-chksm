@@ -88,7 +88,7 @@ o.createAddressFromText = function (payload) {
 ```
 [from L67](https://github.com/1Hyena/cryptograffiti/blob/982e4e6b572ee77faf5c8894c32ec880766a5745/src/lib/bitcoin.js#L67)
 
-which looks ... um -- like it just passes the buck. hah.
+which looks ... um -- like it just passes the buck. hah. next function is base58(text):
 
 ```
 function base58(text) {
