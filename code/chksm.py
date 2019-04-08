@@ -4,12 +4,38 @@ import binascii
 import base58
 
 def main():
-	#print("Enter some text to retrive a checksum: ")
-	#msg = input()
-	input = bytes.fromhex("ee00279f6b080e8ed015ee00279f6b080e8ed015")
+	print("Enter your shasum (20bytes): ")
+	msg = input()
+	while len(msg)>40:
+		print("String is too long. Try again. ")
+		msg = input()
+
+	inBytes = bytes.fromhex(msg)
+	preChksum = b'\x00' + inBytes
+
+	print(preChksum)
+
+	hash1 = hashlib.sha256(preChksum).hexdigest()
+	hash2 = hashlib.sha256(bytes.fromhex(hash1)).hexdigest()
+
+	chksum = hash2[:8]
+	print(chksum)
+	postChksum = preChksum + bytes.fromhex(chksum)
+	print(base58.b58encode(postChksum).decode())
+
+	#sha2x to get addr checksum
+	chksum = hashlib.sha256(bytes.fromhex(hashlib.sha256(preChksum).hexdigest())).hexdigest()[:8]
+	print(chksum)
+	postChksum = preChksum + bytes.fromhex(chksum)
+	print(postChksum)
+
+	print(base58.b58encode(postChksum))
+
+
+	'''input = bytes.fromhex("ee00279f6b080e8ed015ee00279f6b080e8ed015")
 
 	hash160 = binascii.hexlify(input).decode()
-	print(type(input));print(input)
+	print(input)
 
 	publ_addr_a = b'\x00' + input
 	print(publ_addr_a)
@@ -20,6 +46,7 @@ def main():
 	print(checksum);
 
 	print(publ_addr_b.decode())
+	'''
 
 	#chk = returnChk(msg,16)
 	#print(chk)
