@@ -148,3 +148,69 @@ function base58(text) {
 ```
 
 [from L112](https://github.com/1Hyena/cryptograffiti/blob/982e4e6b572ee77faf5c8894c32ec880766a5745/src/lib/bitcoin.js#L112)
+
+Don't care about padding right now because whatever I put in there is going to be the total size.
+
+So it looks like they're using bitwise math to encode the data into a wordarray.
+Then hashing, by performing a hash on that wordarray, you get the pubkeyhash to insert into the script.
+e.g. OP_DUP OP_HASH160 <pubkeyhash> OP_EQUALVERIFY OP_CHECKSIG
+so the idea is that if we look at this pubkeyhash as binary, we will recover the encoded data, and the browser will display it properly.
+
+still working through the details. i want to reimplement this in python so my demo can be all in python
+worst cast right now i generate shasum and truncate,
+then i load it into the browser to get the transaction
+then i pay the transaction
+
+all of the pieces are here - we're still just putting them together.
+let's enumerate the pieces required.
+1) dev vanity address
+2) shasum output from sourcecode
+3) truncate the output from 2) to fit into one bitcoin address
+4) generate which bitcoin address to send to
+5) encode that data and output raw btc transaction
+6) pay from 1) to the address created in 4)
+7) pull this checksum from the bitcoin transaction, linking the transaction.
+
+Done: 1, 2, 3
+Working on: 4, 5
+To do: 6,7
+
+One thing to note here is that in the general case, you can write anything in this textbox.
+In my case I know I'm already writing hex digits. So translation between encoding schemes isn't really necessary.
+E.g. output from the shasum is ... 5bd52d7eb355febb5fdfc17532d37f463318b9dd
+which I take 5bd52d7eb355febb from, prepend with 0x00
+now I have the data to generate
+want 0x005bd52d7eb355febb > 1addr
+
+--- 4/4/2019 ---
+
+ok, working through the code.
+want to put the ASCII codes into an int array.
+The first value is 00 (need this to make the hash [address] start with a 1)
+the first word will be 0x00 plus the first 3 chars (if ascii, less if utf8) - since we're working in hex, don't need to pay attention to utf8.
+
+hashing the wordarray gives you a checksum. don't think this is necessary.
+
+"ee00279f6b080e8ed015" : 1AF8U4HpkuSscEVZiTDW4uua7BfufD1ShC
+
+Checking out base58 python library now.
+
+\x00ee00279f6b080e8ed015\xb0AB\x1f is the decoded output of BTC address 1AF8U4HpkuSscEVZiTDW4uua7BfufD1ShC
+
+So - you see our string embedded in there ...
+\x00*ee00279f6b080e8ed015*\xb0AB\x1f
+
+so essentially this boils down to a 0 byte, our hex (a number) - then finish out the address with a two-byte \xb0AB and then a one-byte \x1f
+
+trying another ...
+
+"öööööööööö"           : 1Jqqi7EknkWdeNE61VusY7Ub3sHq4vNVoT
+'\x00\xc3\xb6\xc3\xb6\xc3\xb6\xc3\xb6\xc3\xb6\xc3\xb6\xc3\xb6\xc3\xb6\xc3\xb6\xc3\xb6!\xe3\xee\xee'
+
+This one has a bunch of bytes bc it's utf-8 encoded.
+
+> base58.b58decode(b'1BFZjxdWM1gDukNGFMQWmKUv12Lto4mun9')
+
+'\x00print("Hello World");K\xd1\x9a'
+
+So bitcoin addresses always start with \x00 -- and then you need some bytes for the checksum at the end.

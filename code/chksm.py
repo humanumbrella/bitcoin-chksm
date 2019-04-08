@@ -1,15 +1,29 @@
 #coding=utf8
 import hashlib
 import binascii
+import base58
 
 def main():
-	print("Enter some text to retrive a checksum: ")
-	msg = input()
-	msg = binascii.hexlify(msg.encode('utf-8'))
-	print(msg)
-	chk = returnChk(msg)
-	print(chk)
-	print(addrToSend(0x00,chk))
+	#print("Enter some text to retrive a checksum: ")
+	#msg = input()
+	input = bytes.fromhex("ee00279f6b080e8ed015ee00279f6b080e8ed015")
+
+	hash160 = binascii.hexlify(input).decode()
+	print(type(input));print(input)
+
+	publ_addr_a = b'\x00' + input
+	print(publ_addr_a)
+	checksum = hashlib.sha256(hashlib.sha256(publ_addr_a).digest()).digest()[:4]
+	#print(binascii.unhexlify(checksum).decode())
+	publ_addr_b = base58.b58encode(publ_addr_a + checksum)
+
+	print(checksum);
+
+	print(publ_addr_b.decode())
+
+	#chk = returnChk(msg,16)
+	#print(chk)
+	#print(addrToSend(0x00,chk))
 
 	#print("send 550 sats to addr:  ")
 
@@ -28,8 +42,8 @@ def addrToSend(ver,digest):
 	print (data)
 	return "1ADDR"+data[2:]
 
-def returnChk(msg):
-	chksmLength = 16
+def returnChk(msg,chk=8):
+	chksmLength = chk
 
 	hash1 = hashlib.sha256(msg).hexdigest()
 
@@ -39,7 +53,7 @@ def returnChk(msg):
 
 
 	info = "SHA(\""+msg.decode()+"\"):\n"+hash1+"\nSHA(SHA(\""+msg.decode()+"\")):\n"+hash2+"\nCheckSum:\n"+chksm
-	print(info)
+	#print(info)
 	return chksm
 
 if __name__ == "__main__":

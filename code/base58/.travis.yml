@@ -1,0 +1,15 @@
+language: python
+sudo: false
+python:
+    - "2.7"
+    - "3.4"
+    - "3.5"
+    - "3.6"
+    - "pypy"
+    - "pypy3"
+install:
+    - pip install -r test-requirements.txt
+script:
+    pytest --pep8 --flakes --cov=base58 .
+after_success:
+    coveralls
