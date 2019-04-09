@@ -195,7 +195,7 @@ hashing the wordarray gives you a checksum. don't think this is necessary.
 
 Checking out base58 python library now.
 
-\x00ee00279f6b080e8ed015\xb0AB\x1f is the decoded output of BTC address 1AF8U4HpkuSscEVZiTDW4uua7BfufD1ShC
+\x00ee00279f6b080e8ed015b0AB1f is the decoded output of BTC address 1AF8U4HpkuSscEVZiTDW4uua7BfufD1ShC
 
 So - you see our string embedded in there ...
 \x00*ee00279f6b080e8ed015*\xb0AB\x1f
