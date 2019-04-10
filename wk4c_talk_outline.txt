@@ -1,0 +1,31 @@
+let's use the most secure thing humans have ever create to improve and solve user security
+--
+What do I mean by security?
+  integrity
+  authenticity
+
+1) how do I know what landed on my machine is the same thing as I meant to download?
+2) how do I know that what landed on my machine is authentic (meaning signed by the developer)
+--
+As a developer, I would package my content, compute a checksum, and digitally sign the package.
+Then provide all of this information, as well as instructions on how to verify the data, on the download page of my webserver.
+--
+As an end user, I want to securely install a file:
+I go to download the file, which shows a checksum, a public key, and a digital signature.
+which you can think of as a hash of the contents of the file
+and a signature, which you all understand means the developer signed off on this release.
+This isn't that complicated, but requires extra effort on the user's part.
+
+--
+And we all know what that means.
+--
+How might we go about doing this on Bitcoin?
+We need several ingredients before we can make this happen:
+I vanity mine an address and prepopulate it with some unspent UTXOs.
+--
+Now, as a developer, I package my content and run my application. This results in an on chain trasnaction.
+--
+As a user, I compute a checksum, then check the blockchain. If I see a transaction
+from the company's special address, I know this software is valid.
+--
+The fact that this transaction exists on chain requires that I signed it.

@@ -9,7 +9,7 @@ testing = False
 print('-'*64)
 print("OUTSIDE SCOPE OF DEMO")
 print("Step 1: Send 1000 Satoshis to a vanity mined developer address:")
-print("1DCSVhKLR6jyaGa7PGaBmXj5NFtZGe39uG")
+print("\n1DCSVhKLR6jyaGa7PGaBmXj5NFtZGe39uG\n")
 print('-'*64)
 print("Step 2: Checking this address should now show a few UTXOs")
 print('-'*64)
@@ -44,10 +44,12 @@ print("1DCSVhKLR6jyaGa7PGaBmXj5NFtZGe39uG")
 print("to")
 print(publ_addr_b.decode())
 
+asdf = input()
 print('-'*64)
 #placeholder
 print('010000000185d4bd1433b69576473ff87292ab52736cf56572ed9aa83f7618c77f886bfbf60800000049483045022100bdac463d53b9eb7b219a20cfa309bf165101d5abd11d58a9c55bd38223147d3302206c400c5098397a1f4970eacd49fc395bb653d960ded80bbd1c14bfe8dfc66bfb01ffffffff02e8030000000000001976a914bb050db7d52d9aab1db0d580787fb7f8848f3ca988ac0000000000000000426a40455720546865207665727920666972737420236f70656e62617a616172206d61696e6e6574207472616e73616374696f6e2068617070656e656420746f64617900000000')
 
+print('-'*64)
 asdf = input()
 print('-'*64)
 print("Step 7: Broadcast the tx to the network")
@@ -55,9 +57,6 @@ print("Step 7: Broadcast the tx to the network")
 print('-'*64)
 asdf = input()
 print("Include a link to the transaction on any block explorer next to download.")
-print("Safety in that it came from our vanity address.")
-print("Increase safety by making this a multisig address.")
-
 #00 f54a5851e9372b87810a8e60cdd2e7cfd80b6e31
 #result
 #1PMycacnJaSqwwJqjawXBErnLsZ7RkXUAs
