@@ -12,6 +12,7 @@ print("Step 1: Send 1000 Satoshis to a vanity mined developer address:")
 print("\n1DCSVhKLR6jyaGa7PGaBmXj5NFtZGe39uG\n")
 print('-'*64)
 print("Step 2: Checking this address should now show a few UTXOs")
+#placeholder - show in a block explorer that I did this
 print('-'*64)
 asdf = input()
 print("Step 3: Run shasum on your file to output a checksum")
@@ -27,7 +28,7 @@ if(testing):
 print(shasum)
 print('-'*64)
 asdf = input()
-print("Step 4: Compute a Bitcoin address that encodes this information:\n")
+print("Step 4: Compute a Bitcoin address that encodes this information:")
 inputBytes = bytes.fromhex(shasum)
 
 publ_addr_a = b'\x00' + inputBytes
@@ -39,24 +40,24 @@ print(publ_addr_b.decode())
 print('-'*64)
 asdf = input()
 
-print("Step 5: Generate a raw tx, consuming an UTXO from #1 to send 550satoshis from: ")
-print("1DCSVhKLR6jyaGa7PGaBmXj5NFtZGe39uG")
+print("Step 5: Generate a raw tx, consuming an UTXO from Step #1 to send\n 550 Satoshis from: ")
+print("\nVanity Address:\t\t1DCSVhKLR6jyaGa7PGaBmXj5NFtZGe39uG")
 print("to")
-print(publ_addr_b.decode())
+print("Checksum Address:\t"+publ_addr_b.decode())
 
 asdf = input()
 print('-'*64)
-#placeholder
-print('010000000185d4bd1433b69576473ff87292ab52736cf56572ed9aa83f7618c77f886bfbf60800000049483045022100bdac463d53b9eb7b219a20cfa309bf165101d5abd11d58a9c55bd38223147d3302206c400c5098397a1f4970eacd49fc395bb653d960ded80bbd1c14bfe8dfc66bfb01ffffffff02e8030000000000001976a914bb050db7d52d9aab1db0d580787fb7f8848f3ca988ac0000000000000000426a40455720546865207665727920666972737420236f70656e62617a616172206d61696e6e6574207472616e73616374696f6e2068617070656e656420746f64617900000000')
+#real raw tx, from electrum -- manual coming.
+print('0200000001f154cba4b162f349e95f29711a58a1596ce1fe5c40577a204cb47c286b8c2bdd010000008a47304402204ec8909662f91b1191bfe75307afe88bc9f0a171136456caaddbb454647e8dd202205064fe191a52c9acf721ceff9d02363a6659ca08716c111e20ce1007f9e5d83201410441a044fa4d9ece38d4076695e645a94478cfad3b6007661db780c6f568eea3d4795908005fd5b3b9d084fe02825ff13964a551f7c0af6c54800934f3aa81e31cfdffffff0226020000000000001976a914f178ed7f17154b292f7bc06aba2e35dcfb467d3988ace4210000000000001976a91485cb5deeca0785dbe22ca4b7b02dc0396d96df6988ac11b70800')
 
 print('-'*64)
 asdf = input()
 print('-'*64)
-print("Step 7: Broadcast the tx to the network")
+print("Step 7: Broadcast the signed tx to the network and wait for confirmation.")
 
 print('-'*64)
 asdf = input()
-print("Include a link to the transaction on any block explorer next to download.")
+print("Include a link to the transaction on any block explorer.")
 #00 f54a5851e9372b87810a8e60cdd2e7cfd80b6e31
 #result
 #1PMycacnJaSqwwJqjawXBErnLsZ7RkXUAs
