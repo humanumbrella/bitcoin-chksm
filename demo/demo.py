@@ -53,11 +53,12 @@ print('0200000001f154cba4b162f349e95f29711a58a1596ce1fe5c40577a204cb47c286b8c2bd
 print('-'*64)
 asdf = input()
 print('-'*64)
-print("Step 7: Broadcast the signed tx to the network and wait for confirmation.")
+print("Step 7: Broadcast the signed tx to the network and wait for it\nto be mined(confirmation).")
 
 print('-'*64)
 asdf = input()
 print("Include a link to the transaction on any block explorer.")
+print("5b42ea02de5a7d42336d97794c0c86c79540a5a768eccd5d7ee7b9a217bece88")
 #00 f54a5851e9372b87810a8e60cdd2e7cfd80b6e31
 #result
 #1PMycacnJaSqwwJqjawXBErnLsZ7RkXUAs
