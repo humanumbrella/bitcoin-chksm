@@ -13,23 +13,22 @@ def main():
 	inBytes = bytes.fromhex(msg)
 	preChksum = b'\x00' + inBytes
 
-	print(preChksum)
+	#print(preChksum)
 
 	hash1 = hashlib.sha256(preChksum).hexdigest()
 	hash2 = hashlib.sha256(bytes.fromhex(hash1)).hexdigest()
 
 	chksum = hash2[:8]
-	print(chksum)
+	#print(chksum)
 	postChksum = preChksum + bytes.fromhex(chksum)
-	print(base58.b58encode(postChksum).decode())
+	#print(base58.b58encode(postChksum).decode())
 
 	#sha2x to get addr checksum
 	chksum = hashlib.sha256(bytes.fromhex(hashlib.sha256(preChksum).hexdigest())).hexdigest()[:8]
-	print(chksum)
+	#print(chksum)
 	postChksum = preChksum + bytes.fromhex(chksum)
-	print(postChksum)
 
-	print(base58.b58encode(postChksum))
+	print(base58.b58encode(postChksum).decode())
 
 
 	'''input = bytes.fromhex("ee00279f6b080e8ed015ee00279f6b080e8ed015")

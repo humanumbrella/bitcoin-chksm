@@ -1,25 +1,45 @@
 # bitcoin-chksm
-Here we provide a mechanism to write software package checksums on chain to have a public record.
-More info coming in the documentation phase, currently building.
+This project provides a mechanism to convert software checksums (_shasum 256_ on MacOS) to a Bitcoin address in order to digitally sign releases on the Bitcoin blockchain.
 
 # Introduction
 ## What's a checksum?
-[Source](https://www.lifewire.com/what-does-checksum-mean-2625825)
+A checksum is a fingerprint of a piece of data. Might be easiest to think about it in terms of a file, but checksums are used all over the place, even in protocols. The question we're asking is:  _How do we verify the integrity of this data?_ [...more info](https://www.lifewire.com/what-does-checksum-mean-2625825)
+
 ## Why are they used?
-We want to verify that in the transmission of my file from me to you, nothing was lost. We're not worried about tackling a man-in-the-middle attack here. But that's a bonus
+As we download a file, we are generally not downloading one giant file, because any loss would result in restarting the transfer. Internet transfers actually work via a lot of small chunks (packets). Checksums help us verify that we received all of the chunks and re-assembled the software properly.
 
-# Motivation
-How often do users compute checksums or validate signatures? OK we all think that all users should be doing this all the time, but do they? Will they learn? Can we make it easier?
+Think of it like - what is on my computer is exactly what was on the server (to the bit). Nothing was corrupted or lost during the transfer. We're not worrying about tackling the possible man-in-the-middle (MITM) attack here.
 
-# Usage
-1) The developer computes a sha256 hash of the zip file they want to upload.
-2) The developer uploads the file to a webserver and the checksum is next to the download link.
-3) The checksum is linked on-chain from an address owned by the developer.
-4) The user downloads the file, and looks at the checksum.
-5) Does it match what's on chain? If yes, good. If no, don't install.
+## Digital Signatures
+To protect against MITM, software packages are generally digitally signed by the company or developer. This is a primary usage of asymmetric cryptography and using private keys to sign data. This is a problem that has a solution. The issue is not the solution it's the usage:  most users have never verified a digital signature before installing an application.
 
-If we do this properly, users don't need to verify gpg signatures, they just verify it's on the chain.
+## Motivation
+How often do users compute checksums or validate signatures? OK we may think that all users should be doing this all the time, but do they? Will they ever learn to do it? Should they ever learn? Is there any way we could make it easier?
 
-More coming soon
+# Developer Usage
+##### onetime
+1. Vanity mine a from-address (or multiple to form a multisig version)
+2. Send >=1000 Satoshi to this address from any address.
 
-sidenote - what if the application precomputed its checksum. then knew where to look on chain. and then when starting the install it checked if the value on chain matched the value it computed -- otherwise it won't install. almost like a safer on-chain license key.
+##### normal
+1. Compute a 256-bit shasum for your package chksm.py (run `shasum 256 filename`)
+2. Run chksm.py and note the returned bitcoin address
+3.
+2. The developer computes a sha256 hash of the zip file they want to upload.
+1. The developer uploads the file to a webserver and the checksum is next to the download link.
+1. The checksum is linked on-chain from an address owned by the developer.
+1. The user downloads the file, and looks at the checksum.
+1. Does it match what's on chain? If yes, good. If no, don't install.
+
+# End User usage
+1. Download application
+2. run `userApp.py filename`
+3. Check any blockexplorer for this bitcoin address
+4. If it has a transaction FROM a known address of the entity, it is a legit release.
+
+If we do this properly, users don't need to verify gpg signatures, they instead simply verify that the address is both 1) known to the chain and 2) contains an incoming transaction from the known company address.
+
+##### Future Improvements
+Developer uses multisig to perform 3 of 5 signatures to designate a release, for example.
+
+What if the application precomputed its own checksum. Then it knew where to look on chain. And then when starting the install, it checked if the value on chain matched the value it computed (and has a UTXO from known address) -- otherwise it won't install.
