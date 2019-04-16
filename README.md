@@ -23,18 +23,39 @@ How often do users compute checksums or validate signatures? OK we may think tha
 
 ##### normal
 1. Compute a 256-bit shasum for your package chksm.py (run `shasum 256 filename`)
-2. Run chksm.py and note the returned bitcoin address
-3.
-2. The developer computes a sha256 hash of the zip file they want to upload.
-1. The developer uploads the file to a webserver and the checksum is next to the download link.
-1. The checksum is linked on-chain from an address owned by the developer.
-1. The user downloads the file, and looks at the checksum.
-1. Does it match what's on chain? If yes, good. If no, don't install.
+![alt text][shasum]
 
-# End User usage
+[shasum]: img/shasum256.png "Example shasum generation"
+
+2. Run `python3 chksm.py` and note the returned bitcoin address
+![alt text][addr]
+
+[addr]: img/shasumToBtcAddr.png "Example shasum > Bitcoin address"
+
+3. The wallet is loaded from the vanity mined address.
+![alt text][vanity]
+
+[vanity]: img/vanityaddress.png "Bitcoin wallet"
+
+4. Developer now runs through process of sending a small transaction from vanity address to this resultant checksum address. Here we will use the Electrum wallet.
+![alt text][tx]
+
+[tx]: img/transaction.png "Bitcoin transaction (vanity > shasum)"
+
+4. Developer uploads the file and links to the bitcoin transaction proving transaction went from vanity address to shasum address.
+
+# End User Usage
 1. Download application
+![alt text][shasum]
+
+[shasum]: img/shasum256.png "Example shasum generation"
+
 2. run `userApp.py filename`
-3. Check any blockexplorer for this bitcoin address
+![alt text][userapp]
+
+[userapp]: img/userapp.png "Example userApp"
+
+3. Check any blockexplorer for this bitcoin address / transaction
 4. If it has a transaction FROM a known address of the entity, it is a legit release.
 
 If we do this properly, users don't need to verify gpg signatures, they instead simply verify that the address is both 1) known to the chain and 2) contains an incoming transaction from the known company address.
