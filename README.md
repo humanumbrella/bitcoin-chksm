@@ -60,7 +60,7 @@ How often do users compute checksums or validate signatures? OK we may think tha
 
 If we do this properly, users don't need to verify gpg signatures, they instead simply verify that the address is both 1) known to the chain and 2) contains an incoming transaction from the known company address.
 
-##### Future Improvements
+# Future Improvements
 Developer uses multisig to perform 3 of 5 signatures to designate a release, for example.
 
 What if the application precomputed its own checksum. Then it knew where to look on chain. And then when starting the install, it checked if the value on chain matched the value it computed (and has a UTXO from known address) -- otherwise it won't install.
