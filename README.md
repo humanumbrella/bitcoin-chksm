@@ -45,7 +45,7 @@ How often do users compute checksums or validate signatures? OK we may think tha
 4. Developer uploads the file and links to the bitcoin transaction proving transaction went from vanity address to shasum address.
 
 # End User Usage
-1. Download application
+1. Download application and compute checksum
 ![alt text][shasum]
 
 [shasum]: img/shasum256.png "Example shasum generation"
