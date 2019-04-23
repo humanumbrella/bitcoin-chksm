@@ -8,10 +8,10 @@ A checksum is a fingerprint of a piece of data. Might be easiest to think about 
 ## Why are they used?
 As we download a file, we are generally not downloading one giant file, because any loss would result in restarting the transfer. Internet transfers actually work via a lot of small chunks (packets). Checksums help us verify that we received all of the chunks and re-assembled the software properly.
 
-Think of it like - what is on my computer is exactly what was on the server (to the bit). Nothing was corrupted or lost during the transfer. We're not worrying about tackling the possible man-in-the-middle (MITM) attack here.
+Think of it like - what is on my computer is exactly what was on the server (to the bit). Nothing was corrupted or lost during the transfer. Here we are not worrying about tackling the possible man-in-the-middle (MITM) attack.
 
 ## Digital Signatures
-To protect against MITM, software packages are generally digitally signed by the company or developer. This is a primary usage of asymmetric cryptography and using private keys to sign data. This is a problem that has a solution. The issue is not the solution it's the usage:  most users have never verified a digital signature before installing an application.
+To protect against a MITM attack (where the attacker has compromised both the codebase and the checksum), software packages are generally digitally signed by the company or developer. This is a primary usage of asymmetric cryptography and using private keys to sign data. This is a problem that has a solution. The issue is not the solution it's the usage:  most users have never verified, nor will ever verify, a digital signature before installing an application.
 
 ## Motivation
 How often do users compute checksums or validate signatures? OK we may think that all users should be doing this all the time, but do they? Will they ever learn to do it? Should they ever learn? Is there any way we could make it easier?
@@ -20,6 +20,8 @@ How often do users compute checksums or validate signatures? OK we may think tha
 ##### onetime
 1. Vanity mine a from-address (or multiple to form a multisig version)
 2. Send >=1000 Satoshi to this address from any address.
+
+Inside `code/vanitygen` you can use vanitygen or oclvanitygen with specified parameters to generate your own dev vanity address(es).
 
 ##### normal
 1. Compute a 256-bit shasum for your package chksm.py (run `shasum 256 filename`)
@@ -37,12 +39,15 @@ How often do users compute checksums or validate signatures? OK we may think tha
 
 [vanity]: img/vanityaddress.png "Bitcoin wallet"
 
-4. Developer now runs through process of sending a small transaction from vanity address to this resultant checksum address. Here we will use the Electrum wallet.
+4. This wallet needs a UTXO with at least 1324 Satoshis (0.00001324 BTC). From this amount, 550 Sat will go to the chksm address and 774 will be for the network fee (3sat/byte). Currently this will work but it will take a while. Depending on the congestion on the network and your requirements for speed, you may need to increase the fee. In electrum you can turn on custom fee pricing and specify whatever you like.
+
+5. Developer should now run through the process of sending a small transaction from vanity address to this resultant checksum address. Here we will use the Electrum wallet.
 ![alt text][tx]
 
 [tx]: img/transaction.png "Bitcoin transaction (vanity > shasum)"
 
-4. Developer uploads the file and links to the bitcoin transaction proving transaction went from vanity address to shasum address.
+
+6. Developer uploads the file and links to the bitcoin transaction proving transaction went from vanity address to shasum address.
 
 # End User Usage
 1. Download application and compute checksum
