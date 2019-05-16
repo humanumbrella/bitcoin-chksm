@@ -11,7 +11,7 @@ def main():
 		msg = input()
 
 	inBytes = bytes.fromhex(msg)
-	preChksum = b'\x00' + inBytes
+	preChksum = b'\x05' + inBytes
 
 	#print(preChksum)
 

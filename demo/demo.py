@@ -52,7 +52,7 @@ print('0200000001f154cba4b162f349e95f29711a58a1596ce1fe5c40577a204cb47c286b8c2bd
 
 print('-'*64)
 asdf = input()
-print('-'*64)
+
 print("Step 7: Broadcast the signed tx to the network and wait for it\nto be mined(confirmation).")
 
 print('-'*64)
